@@ -81,6 +81,9 @@ class PriorityQueue(object):
       self.arr.pop()
       # now bubble down the new root item
       self._bubbleDown(0)
+    else:
+      # remove only item
+      self.arr.pop()
     return save
 
   def _bubbleDown(self, index):
@@ -121,6 +124,8 @@ class PriorityQueue(object):
     """print the list -- for debugging help...."""
     print(self.arr)
 
+  # add checkInvariants method
+
 # ---------------------------------------------- #
 
 def main():
@@ -157,7 +162,8 @@ def main():
   assert(minpq.peekPriority()==3)
   print(minpq)
   minpq.pl()
-  for i in range(len(minpq) + 1):
+  #for i in range(len(minpq) + 1):
+  for i in range(len(minpq)):
     print(minpq.peekItem(), minpq.peekPriority())
     # dequeue root item....
     item = minpq.dequeue()
