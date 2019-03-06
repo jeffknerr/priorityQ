@@ -1,5 +1,6 @@
 """
-Priority Queue Class
+Priority Queue Class.
+Uses PQNode objects for storage.
 
 J. Knerr
 Dec 2018
@@ -121,53 +122,45 @@ class PriorityQueue(object):
       return A <= B
 
   def pl(self):
-    """print the list -- for debugging help...."""
+    """print the list of PQNodes -- for debugging help...."""
     print(self.arr)
 
   # add checkInvariants method
 
+  def __contains__(self, item):
+    """allow use of 'in' operator"""
+    for pqn in self.arr:
+      data = pqn.item
+      if data == item:
+        return True
+    return False
+
 # ---------------------------------------------- #
 
 def main():
-  """some basic test code"""
+  """some basic use examples"""
 
   # make PQ
   pq = PriorityQueue()
-  print(pq)
-  assert(pq.getSize()==0)
-  assert(pq.isEmpty()==True)
-  assert(len(pq)==0)
   minpq = PriorityQueue("minimum")
-  print(minpq)
-  # bad = PriorityQueue("bad") 
-  items = list("ABCDEFG")
+  items = list("MRGNFAO")
   priors = [5,20,8,3,50,4,10]
   for i in range(len(items)):
+    print("adding %s with priority %2d" % (items[i], priors[i]))
     pq.enqueue(items[i], priors[i])
-  assert(len(pq)==len(items))
-  assert(pq.getSize()==len(items))
-  assert(pq.isEmpty()==False)
-  assert(pq.peek()=="E")
-  assert(pq.peekItem()=="E")
-  assert(pq.peekPriority()==50)
-  print(pq)
-  pq.pl()
-  for i in range(len(items)):
     minpq.enqueue(items[i], priors[i])
-  assert(len(minpq)==len(items))
-  assert(minpq.getSize()==len(items))
-  assert(minpq.isEmpty()==False)
-  assert(minpq.peek()=="D")
-  assert(minpq.peekItem()=="D")
-  assert(minpq.peekPriority()==3)
-  print(minpq)
-  minpq.pl()
-  #for i in range(len(minpq) + 1):
+  print("Is there an 'F' in the queue? %s" % ("F" in pq))
+  print("Is there a 'Z' in the queue? %s" % ("Z" in pq))
+  print("First in line in pq:  %s" % (pq.peek()))
+  print("Let's dequeue each item from pq: ")
+  for i in range(len(pq)):
+    print(pq.peekItem(), pq.peekPriority())
+    item = pq.dequeue()
+    print("dequeued: ", item)
+  print("Now dequeue each item from the minpq: ")
   for i in range(len(minpq)):
     print(minpq.peekItem(), minpq.peekPriority())
-    # dequeue root item....
     item = minpq.dequeue()
-    print("dequeued root: ", item)
-
+    print("dequeued: ", item)
 if __name__ == "__main__":
   main()
